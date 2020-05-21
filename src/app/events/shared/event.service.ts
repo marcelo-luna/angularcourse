@@ -9,7 +9,7 @@ export class EventService{
       let subject = new Subject();
       setTimeout(() => {
         subject.next(Events); subject.complete;
-      }, 500);
+      }, 100);
       console.log()
         return subject;
     }

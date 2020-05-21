@@ -1,9 +1,9 @@
-import { Component } from '@angular/core'
-import { EventService } from 'src/app/events/shared/event.service'
-import { ToastService } from 'src/app/events/common/toast.service'
+import { Component, OnInit } from '@angular/core'
+import { EventService } from './shared/event.service'
+import { ToastService } from './common/toast.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
-  selector: 'events-list',
   template: `
   <div>
     <h1>Upcoming Angular Events</h1>
@@ -16,18 +16,21 @@ import { ToastService } from 'src/app/events/common/toast.service'
   </div>
   `
 })
-export class EventsListComponent {
+export class EventsListComponent implements OnInit {
 
-  constructor(private eventService: EventService, private toastService: ToastService) {
+  events: any;
 
-    
+  constructor(private eventService: EventService, private toastService: ToastService, private route: ActivatedRoute) {
+    console.log('events-module');
   }
 
-  eventClick(eventName: string){
-    this.toastService.success(eventName,'Event');
+  ngOnInit() {
+    console.log('here')
+    this.events = this.route.snapshot.data['events']
+    //this.eventService.getEvents().subscribe(e => this.events = e );
+  }
+
+  eventClick(eventName: string) {
+    this.toastService.success(eventName, 'Event');
   };
-
-
-  events = this.eventService.getEvents();
-
 }

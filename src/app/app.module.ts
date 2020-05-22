@@ -2,24 +2,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
 
-import { EventDetailsComponent } from './events/event-details/event-details.component';
+import {
+  EventThumbnailComponent,
+  EventsListComponent,
+  EventListResolverService,
+  EventDetailsComponent,
+  EventRouterActivatorService
+} from './events/index'
+
 import { appRoutes } from './routes';
 import { EventsAppComponent } from './events-app.component';
-import { EventsListComponent } from './events/events-list.component'
-import { EventThumbnailComponent } from './events/event-thumbnail.component'
 import { NavBarComponent } from './nav/nav-bar.component'
 import { EventService } from 'src/app/events/shared/event.service'
 import { ToastService } from 'src/app/events/common/toast.service'
-import { CreateEventComponent } from './shared/create-event/create-event.component';
+import { CreateEventComponent } from './events/create-event/create-event.component';
 import { Error404Component } from './errors/404.component';
-import { EventRouterActivatorService } from './events/event-details/event-router-activator.service'
-import { EventListResolverService } from './events/event-list-resolver.service';
+import { AuthService } from './user/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
-
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
 
   ],
   declarations: [
@@ -36,6 +41,7 @@ import { EventListResolverService } from './events/event-list-resolver.service';
     ToastService,
     EventRouterActivatorService,
     EventListResolverService,
+    AuthService,
     {
       provide: 'canDeactivateCreateEvent',
       useValue: checkDirtyState

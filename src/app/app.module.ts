@@ -7,7 +7,9 @@ import {
   EventsListComponent,
   EventListResolverService,
   EventDetailsComponent,
-  EventRouterActivatorService
+  EventRouterActivatorService,
+  SessionListComponent
+  
 } from './events/index'
 
 import { appRoutes } from './routes';
@@ -18,13 +20,15 @@ import { ToastService } from 'src/app/events/common/toast.service'
 import { CreateEventComponent } from './events/create-event/create-event.component';
 import { Error404Component } from './errors/404.component';
 import { AuthService } from './user/auth.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateSessionComponent } from './events/create-session/create-session.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
+    ReactiveFormsModule
 
   ],
   declarations: [
@@ -34,7 +38,9 @@ import { FormsModule } from '@angular/forms';
     EventDetailsComponent,
     NavBarComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
+    CreateSessionComponent,
+    SessionListComponent
   ],
   providers: [
     EventService,

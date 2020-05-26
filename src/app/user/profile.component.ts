@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { TOASTR_TOKEN, Toastr } from '../common/toast.service';
 
 @Component({
   templateUrl: './profile.component.html',
@@ -18,18 +19,19 @@ export class ProfileComponent implements OnInit {
   private firstName: FormControl;
   private lastName: FormControl;
 
-  constructor(private authService: AuthService, private router: Router) {
-
+  constructor(private authService: AuthService, 
+    private router: Router,
+    @Inject(TOASTR_TOKEN) private toastr:Toastr) {
   }
 
   ngOnInit(): void {
 
-      this.firstName = new FormControl(this.authService.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*')]);
-      this.lastName = new FormControl(this.authService.currentUser.lastName, Validators.required);
-      this.profileForm = new FormGroup({
-        firstName: this.firstName,
-        lastName: this.lastName
-      })
+    this.firstName = new FormControl(this.authService.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*')]);
+    this.lastName = new FormControl(this.authService.currentUser.lastName, Validators.required);
+    this.profileForm = new FormGroup({
+      firstName: this.firstName,
+      lastName: this.lastName
+    })
   }
 
   cancelClick() {
@@ -41,16 +43,17 @@ export class ProfileComponent implements OnInit {
 
     if (this.profileForm.valid) {
       this.authService.updateCurrentUser(formsValue.value.firstName, formsValue.value.lastName);
-      this.router.navigate(['events']);
+      this.toastr.success('Profile Saved')
+      //this.router.navigate(['events']);
     }
   }
 
-  validateFirstName(){
-   return this.firstName.invalid && this.firstName.touched
+  validateFirstName() {
+    return this.firstName.invalid && this.firstName.touched
   }
 
-  validateLastName(){
+  validateLastName() {
     return this.lastName.invalid && this.lastName.touched
-   }
+  }
 
 }

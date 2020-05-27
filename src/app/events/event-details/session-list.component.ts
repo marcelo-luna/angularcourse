@@ -24,6 +24,10 @@ export class SessionListComponent implements OnInit, OnChanges {
     }
   }
 
+  toggleVote(session: ISession){
+    
+  }
+
   filterSession(){
     if (this.filterBy === 'all'){
       this.visibleSessions = this.sessions;

@@ -9,7 +9,8 @@ import {
   EventDetailsComponent,
   EventRouterActivatorService,
   SessionListComponent,
-  DurationPipe
+  DurationPipe,
+  UpvoteComponent
   
 } from './events/index'
 
@@ -49,6 +50,7 @@ let jQuery = window['$'];
     DurationPipe,
     SimpleModalComponent,
     ModalTriggerDirective,
+    UpvoteComponent,
   ],
   providers: [
     EventService,

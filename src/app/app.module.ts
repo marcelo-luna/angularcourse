@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
-
 import {
   EventThumbnailComponent,
   EventsListComponent,
@@ -10,7 +9,9 @@ import {
   EventRouterActivatorService,
   SessionListComponent,
   DurationPipe,
-  UpvoteComponent
+  UpvoteComponent,
+  VoterService,
+  LocationValidator
   
 } from './events/index'
 
@@ -51,9 +52,11 @@ let jQuery = window['$'];
     SimpleModalComponent,
     ModalTriggerDirective,
     UpvoteComponent,
+    LocationValidator
   ],
   providers: [
     EventService,
+    VoterService,
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
     EventRouterActivatorService,

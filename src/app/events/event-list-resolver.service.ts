@@ -11,9 +11,7 @@ export class EventListResolverService implements Resolve<any> {
 
   constructor(private eventService: EventService) { }
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<IEvent>|Promise<any>|any {
-    return this.eventService.getEvents().pipe(map(events => events))
-  }}
+  resolve() {
+    return this.eventService.getEvents();
+  }
+}

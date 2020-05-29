@@ -6,12 +6,13 @@ import {
   EventsListComponent,
   EventListResolverService,
   EventDetailsComponent,
-  EventRouterActivatorService,
+  EventResolverService,
   SessionListComponent,
   DurationPipe,
   UpvoteComponent,
   VoterService,
-  LocationValidator
+  LocationValidator,
+  EventNavListComponent
   
 } from './events/index'
 
@@ -54,14 +55,15 @@ let jQuery = window['$'];
     SimpleModalComponent,
     ModalTriggerDirective,
     UpvoteComponent,
-    LocationValidator
+    LocationValidator,
+    EventNavListComponent
   ],
   providers: [
     EventService,
     VoterService,
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
-    EventRouterActivatorService,
+    EventResolverService,
     EventListResolverService,
     AuthService,
     {

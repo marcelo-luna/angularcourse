@@ -1,29 +1,61 @@
 import { Injectable, OnInit } from "@angular/core";
 import { IUser } from "./user.model";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { tap, catchError } from "rxjs/operators";
+import { of } from "rxjs";
 
 @Injectable()
-export class AuthService implements OnInit{
-    
+export class AuthService implements OnInit {
+
+    constructor(private http: HttpClient) {
+    }
+
     ngOnInit(): void {
-      
+
     }
     currentUser: IUser;
 
-    loginUser(userName: string, password: string){
-        this.currentUser = {
-            id: 1,
-            userName: userName,
-            firstName: 'Marcelo',
-            lastName: "Luna"
-        }
+    loginUser(userName: string, password: string) {
+
+
+        let loginInfo = { username: userName, password: password };
+        let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+        return this.http.post('/api/login', loginInfo, options)
+            .pipe(tap(data => {
+                this.currentUser = <IUser>data['user'];
+            }))
+            .pipe(catchError(err => {
+                return of(false);
+            }))
     }
 
-    isAuthenticated(){
+    isAuthenticated() {
         return !!this.currentUser;
     }
 
-    updateCurrentUser(firstName: string, lastName:string){
+    checkAuthenticationStatus() {
+        this.http.get('/api/currentIdentity')
+            .pipe(tap(data => {
+                if (data instanceof Object) {
+                    this.currentUser = <IUser>data;
+                }
+            }))
+            .subscribe();
+    }
+
+    updateCurrentUser(firstName: string, lastName: string) {
         this.currentUser.firstName = firstName;
         this.currentUser.lastName = lastName;
+
+        let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+        return this.http.put(`/api/users/${this.currentUser.id}`, this.currentUser, options)
+    }
+
+    logout(){
+        this.currentUser = undefined;
+        let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+        return this.http.post('/api/logout/', {}, options)
     }
 }
